@@ -1,81 +1,60 @@
 #include <iostream>
-#include <fstream>
-#include <string>
+#include <stdlib.h>
+#include <algorithm>
 using namespace std;
-bool proverka(char x)
-{
-	string t = "й…у”е≈Є®ајоќэЁи»€яюё";
-	for (int i = 0; i < 20; i++)
-	{
-		if (x == t[i])return true;
-	}
-	return false;
-}
 int main() {
-	system("chcp 1251>nul");
 	setlocale(LC_ALL, "RUS");
-	fstream file("ƒокумент.txt");
-	if (!file)
-	{
-		cout << "‘айл не открыт\n\n";
-		return -1;
+	system("color F0");
+	cout << "введите размерность массива" << endl;
+	int n;
+	cin >> n;
+	while (n <= 0) {
+		cout << "размерность может быть только положительной, попробуйте еще раз";
+		cin >> n;
 	}
-	else
-	{
-		cout << "¬се ќ ! ‘айл открыт!\n\n";
+	int* arr = new int[n];
+	for (int i = 1; i <= n; i++) {
+		arr[i] = rand() % 100 + 1;
+		cout << arr[i] << " ";
 	}
-	string s[20];
-	for (int i = 1; i <= 12; i++) {
-		getline(file, s[i]);
-		cout << s[i] << endl;
+	cout << endl << "введите номер элемента, с которого нужно начать удаление" << endl;
+	int nk;
+	cin >> nk;
+	while (nk > n) {
+		cout << "введите корректный номер tлемента";
+		cin >> nk;
 	}
-	cout << endl << "«атем введите строку, начина€ с которой вы хотите скопировать данные" << endl;
-	int das;
-	cin >> das;
-	while (das <= 0) {
-		cout << "“акой строки нет, ты ввел строку отрицательную либо нулевую строку";
-		cin >> das;
+	while (nk <= 0) {
+		cout << "введите корректный номер элемента";
+		cin >> nk;
 	}
-	while (das + 5 >= 13) {
-		cout << "¬ы ввели такое значение, что вылетаете за границы массива...";
-		cin >> das;
+	cout << endl << "введите количество удал€емых элементов" << endl;
+	int nd;
+	cin >> nd;
+	while ((nd <= 0) || (nk + nd > n)) {
+		cout << "введите количество удал€емых элементов снова ";
+		cin >> nd;
 	}
-	string ds[20];
-	int j = 1;
-	for (int i = das; i <= das + 5; i++) {
-		ds[j] = s[i];
-		j++;
+	while (nk <= 0) {
+		cout << "введите номер элемента снова ";
+		cin >> nk;
+	}
+	int* newarr = new int[n];
+	for (int i = 1; i <= n - nd; i++) {
+		newarr[i] = arr[i];
+	}
+	//сделали переписку, надо  вконце еще прописать условие
+	for (int i = nk; i < nk + nd; i++) {
+		cout << endl << "введите новые элементы" << endl;
+		cin >> newarr[i];
+	}
+	for (int i = nk + nd; i <= n; i++) {
+		newarr[i] = arr[i];
+	}
+	cout << endl;
 
+	for (int i = 1; i <= n; i++) {
+		cout << endl << newarr[i] << endl;
 	}
-	cout << endl << "вот строки, которые вы хотите скопировать" << endl;
-	int sum = 0;
-	string hlad;
-	for (int i = 1; i <= 12; i++) {
-		getline(file, s[i]);
-		cout << ds[i] << endl;
-	}
-	for (int i = 1; i <= 12; i++) {
-		hlad = ds[i];
-		j = 0;
-		while (j < hlad.size()) {
-			if (proverka(hlad[j]) == true) {
-				sum++;
-			}
-			j++;
-		}
-	}
-	cout << " олво гласных букв " << sum << endl;
-	fstream F2("file2.txt");
-	for (int i = 1; i < 13; i++) {
-		F2 << ds[i] << endl;
-	}
-	if (!F2)
-	{
-		cout << "‘айл не открыт\n\n";
-		return 0;
-	}
-	else
-	{
-		cout << "¬се ќ ! ‘айл открыт!\n\n";
-	}
+
 }
