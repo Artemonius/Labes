@@ -1,160 +1,54 @@
 #include <iostream>
-#include <list>
-#include <fstream>
-#include <windows.h>
-#include <cmath>
-#include <string>
-using namespace std;
-struct human
+#include "Queue.h"
+#include <queue>
+#define FILLNUMBER 10
+queue<int> RemoveEvenElementsFromQueue(queue<int>& queue)
 {
-    string fio;
-    string adres;
-    string pass;
-    human* next = NULL;
-};
-int fun_hash(string s, int n)
-{
-    int l;
-    l = s.size();
-    return (l % n);
-}
+    ::queue<int> nQueue;
 
-int main()
-{
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
-    int data;
-    int size = 0;
-    int hash;
-    human x;
-    human* M;
-    human* L;
-    string user_search;
-    int error = 0;
-    while (size < 2 || size>100)
+    int length = queue.size();
+    for (int i = 0; i < length; i++)
     {
-        cout << "Введите размер таблицы\n";
-        cin >> size;
-    }
-    const int N = size;
-    cin.get();
-    human* key = new human[size];
-    for (int i = 0; i < size; i++)
-    {
-        key[i].fio = '0';
-        key[i].adres = '0';
-        key[i].pass = '0';
-        key[i].next = NULL;
-    }
-    ifstream F1("FIO.txt");
-    ifstream F2("adres.txt");
-    ifstream F3("pass.txt");
-
-    for (int i = 0; i < N; i++)
-    {
-        getline(F1, x.fio);
-        getline(F2, x.adres);
-        getline(F3, x.pass);
-        x.next = NULL;
-        hash = fun_hash(x.fio, N);
-
-        while (hash >= size || key[size - 1].fio != "0")
+        if (queue.front() % 2 == 0) //идет проверка на четность индекса
         {
-            human* key_new = new human[size * 2];
-
-            for (int i = 0; i < size; i++)
-            {
-                key_new[i].fio = key[i].fio;
-                key_new[i].adres = key[i].adres;
-                key_new[i].pass = key[i].pass;
-                key_new[i].next = key[i].next;
-            }
-            for (int i = size; i < size * 2; i++)
-            {
-                key_new[i].fio = '0';
-                key_new[i].adres = '0';
-                key_new[i].pass = '0';
-                key_new[i].next = NULL;
-            }
-            delete[] key;
-            key = key_new;
-            size *= 2;
-        }
-
-
-        if (key[hash].fio != "0" and key[hash].next == NULL)
-        {
-            M = key[hash].next;
-            M = new human;
-            *M = x;
-            key[hash].next = M;
-            error++;
+            queue.pop();
         }
         else
-            if (key[hash].next != NULL)
-            {
-                M = key[hash].next;
-                L = M;
-                while (M != NULL)
-                {
-                    L = M;
-                    M = M->next;
-                }
-                M = new human;
-                *M = x;
-                L->next = M;
-                error++;
-            }
-            else
-            {
-                key[hash] = x;
-            }
-
-        cout << "\n\nФИО: " << x.fio;
-        cout << "\nДата рождения : " << x.adres;
-        cout << "\nНомер телефона : " << x.pass;
-        cout << "\nХеш : " << fun_hash(x.fio, N);
-    }
-
-    int k;
-    int j;
-    cout << "\n\nХЭШ-ТАБЛИЦА:" << endl;
-    for (int i = 0; i < size; i++)
-    {
-        k = 1;
-        M = key[i].next;
-        cout << "\nХеш=" << i << "-->" << key[i].fio << endl;
-
-        while (M != NULL)
         {
-            j = k;
-            while (j > 0) { cout << "             "; j--; } cout << M->fio << endl;
-            M = M->next;
-            k++;
+            nQueue.push(queue.front());
+            queue.pop();
         }
     }
+    return nQueue;
+}
 
-    cout << "\n\nТаблица создана. Коллизий: " << error << endl;
-
-    while (true)
+void FillQueue(queue<int>& stlQueue)
+{
+    for (int i = 0; i < FILLNUMBER; i++)
     {
-        cout << "Введите ФИО для поиска \n";
-        getline(cin, x.fio);
-        hash = fun_hash(x.fio, N);
-        M = &key[hash];
-
-        while (M != NULL)
-        {
-            if (M->fio == x.fio)
-            {
-                cout << "\nОбъект найден:\n";
-                cout << "ФИО - " << M->fio << endl;
-                cout << "Адрес - " << M->adres;
-                cout << "Номер паспорта - " << M->pass << endl;
-                return 0;
-            }
-            M = M->next;
-        }
-        if (M == NULL) cout << "Объект не найден\n";
+        stlQueue.push(int(i*5)); //а вот здесь мы регулируем выведенную в первый раз очередь
     }
+}
+
+void PrintQueue(queue<int> stlQueue)
+{
+    while (!stlQueue.empty())
+    {
+        cout << stlQueue.front() << " ";
+        stlQueue.pop();
+    }
+    cout << endl;
+}
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    Queue myQueue = Queue();                //Самописная очередь
+    queue<int> stlQueue;
+    FillQueue(stlQueue);
+    cout << "Очередь до выполнения задания" << endl;
+    PrintQueue(stlQueue);
+    stlQueue = RemoveEvenElementsFromQueue(stlQueue);
+    cout << "Очередь после выполнения задания" << endl;
+    PrintQueue(stlQueue);
+    return 0;
 }
