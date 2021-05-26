@@ -1,46 +1,47 @@
-#pragma once
-#include "Pair.h"
+#include "Pair.h" 
 
+// Зануление элементов
 Pair::Pair(void)
 {
-	first = 0; second = 0;
+	M1 = M2 = 0;
 }
-Pair::~Pair(void)
+
+// Присваивание чисел
+Pair::Pair(int chislo1, double chislo2)
 {
+	M1 = chislo1;
+	M2 = chislo2;
 }
-Pair::Pair(int C, int P)
+
+Pair::Pair(const Pair& t)
 {
-	first = C; second = P;
+	M1 = t.M1;
+	M2 = t.M2;
 }
-Pair::Pair(const Pair& Pair)
+
+// Операция присваивания
+Pair& Pair::operator =(const Pair& t)
 {
-	first = Pair.first; second = Pair.second;
+	M1 = t.M1;
+	M2 = t.M2;
+	return*this;
 }
-void Pair::Set_first(int C)
+
+// Вывод чисел
+ostream& operator<<(ostream& out, const Pair& t)
 {
-	first = C;
-}
-void Pair::Set_second(int P)
-{
-	second = P;
-}
-Pair& Pair::operator=(const Pair& c)
-{
-	if (&c == this)return *this;
-	second = c.second;
-	first = c.first;
-	return *this;
-}
-istream& operator>>(istream& in, Pair& c)
-{
-	cout << "\nПервое:"; in >> c.first; cout << "\nВторое:"; in >> c.second; return in;
-}
-ostream& operator<<(ostream& out, const Pair& c)
-{
-	out << "\nПервое:" << c.first; out << "\nВторое:" << c.second; out << "\n";
+	out << t.M1 << " : " << t.M2;
 	return out;
 }
-void Pair::Show()
+
+// Ввод чисел
+istream& operator>>(istream& in, Pair& t)
 {
-	cout << "\nПервое: " << first; cout << "\nВторое: " << second; cout << "\n";
+	system("chcp 1251>nul");
+	cout << "\nПервое число? ";
+	in >> t.M1;
+	cout << "\nВторое число? ";
+	in >> t.M2;
+	return in;
 }
+
