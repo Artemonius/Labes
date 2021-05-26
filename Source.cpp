@@ -1,25 +1,21 @@
-#include"Time.h"
-using namespace std;
-
+#include"Iterator.h"
 int main()
 {
-	system("chcp 1251>nul");
-	Time t1, t2, t3;
-	t1.set_min_sec();
-	t2.set_min_sec();
-	t1.show();
-	t2.show();
-	t3 = t1 - t2;
-	cout << "После вычитания (' - ')" << endl;
-	t3.show();
-	if (t1 == t2) {
-		t1.show();
-		cout << " равно " << endl;
-		t2.show();
-	}
-	else {
-		t1.show();
-		cout << "не равно" << endl;
-		t2.show();
-	}
+	Vector<int> A(5, 7);
+	Vector <int>myvector(5, 8);
+	cout << A << endl;
+	cin >> A;
+	cout << A << endl;
+	A[1] = 20;
+	cout << A << endl;
+	Vector <int>B(5, 5);
+	cout << B << endl;
+	B = A;
+	cout << B << endl;
+	A[3] = B[3] + 10;
+	cout << A << endl;
+	A = A * B;
+	cout << A << endl;
+	system("pause");
+	return 0;
 }
