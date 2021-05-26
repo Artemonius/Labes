@@ -5,7 +5,6 @@
 #include <vector>
 #include <fstream>
 using namespace std;
-//собственные классы исключений
 struct MyError
 {
     virtual void what() = 0;
@@ -13,34 +12,81 @@ struct MyError
 struct InvalidIndexError : public MyError
 {
     string m_msg;
-    InvalidIndexError() { m_msg = "Исключение: недопустимый индекс списка"; }
+    InvalidIndexError() { m_msg = "Exception: invalid list index"; }
     void what() { cout << m_msg << endl; }
 };
 struct NoMatchSizes : public MyError
 {
     string m_msg;
-    NoMatchSizes() { m_msg = "Исключение: разные размеры списков"; }
+    NoMatchSizes() { m_msg = "Exception: sizes of lists are different"; }
     void what() { cout << m_msg << endl; }
 };
-struct ClassVector
+class Object8
 {
-    ClassVector(int s, int el)
-    {
-        if (s <= 0) throw 1;
-        for (int i = 0; i < s; i++) m_vector.push_back(el);
-    }
-    ~ClassVector() {}
-    vector <int> m_vector;
-    int operator[](int i);
-    int operator()();
-    ClassVector operator*(ClassVector add_vector);
-    void Show();
-    void Change(int index, int el)
-    {
-        auto it = m_vector.begin();
-        advance(it, index);
-        *it = el;
-    }
+public:
+    string name;
+    virtual void Show() = 0;
+    virtual void Read() = 0;
 };
-
+class Print : public Object8
+{
+public:
+    string author;
+    Print() {}
+    Print(string Name, string Author)
+    {
+        name = Name;
+        author = Author;
+    }
+    void Show();
+    void Read();
+};
+class Magazin : public Print
+{
+public:
+    int sheet;
+    Magazin() {}
+    Magazin(string Name, string Author, int Sheet) :Print(Name, Author)
+    {
+        sheet = Sheet;
+    }
+    void Show();
+    void Read();
+};
+struct Vector8
+{
+    vector <Object8*> data;
+    int m_size;
+    int cur;
+    void Add();
+    void Dell();
+    void Show();
+    void ShowName();
+    int operator()();
+    Vector8() { m_size = 0; }
+};
+struct TEvent
+{
+    int what;
+    union
+    {
+        int command;
+        struct
+        {
+            int message;
+            int a;
+        };
+    };
+};
+struct Dialog : Vector8
+{
+    int EndState;
+    int Valid();
+    void EndExec();
+    int Execute();
+    void GetEvent(TEvent& event);
+    void HandleEvent(TEvent& event);
+    void ClearEvent(TEvent& event);
+    Dialog() { EndState = 0; }
+};
 
