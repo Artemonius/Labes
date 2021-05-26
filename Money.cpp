@@ -1,33 +1,29 @@
 #pragma once
-#include "Money.h"
-#include <iostream>
-#include <math.h>
-Money::Money(void) :Pair() {
+#include "Money.h" 
+
+Money::Money(void) :Pair()
+{
 	n_rub = 0;
 	n_kop = 0;
 }
 
-Money::~Money(void) {
-
+Money::~Money(void)
+{
 }
-
 Money::Money(int F, int S, int T, int N) :Pair(F, S) {
 	n_rub = T;
 	n_kop = N;
 }
-
 Money::Money(const Money& t) {
 	first = t.first;
 	second = t.second;
 	n_rub = t.n_rub;
 	n_kop = t.n_kop;
 }
-
 void Money::set_Money(int T, int N) {
 	n_rub = T;
 	n_kop = N;
 }
-
 Money& Money::operator+(const Money& t) {
 	n_kop = t.n_kop + n_kop;
 	n_rub = t.n_rub + n_rub;
@@ -76,16 +72,29 @@ Money& Money::operator-(const Money& t) {
 	}
 	return *this;
 }
-
-istream& operator>>(istream& in, Money& d) {
-	cout << "¬ведите количество рублей: "; in >> d.n_rub; while (d.n_rub < 0) { cout << endl << "¬ведите положительное значение:"; in >> d.n_rub; cout << endl; }
-	cout << "¬ведите количество копеек: "; in >> d.n_kop; while ((d.n_kop < 0) || (d.n_kop > 100)) { cout << endl << "¬ведите корректное значение:"; in >> d.n_kop; cout << endl; }
+istream& operator>>(istream& in, Money& l)
+{
+	cout << "\nѕервое:"; in >> l.first;
+	cout << "\n¬торое:"; in >> l.second;
+	cout << "¬ведите количество рублей: "; in >> l.n_rub; while (l.n_rub < 0) { cout << endl << "¬ведите положительное значение:"; in >> l.n_rub; cout << endl; }
+	cout << "¬ведите количество копеек: "; in >> l.n_kop; while ((l.n_kop < 0) || (l.n_kop > 100)) { cout << endl << "¬ведите корректное значение:"; in >> l.n_kop; cout << endl; }
 	return in;
 }
-
-ostream& operator<<(ostream& out, const Money& d) {
-	out << d.n_rub;
-	if (d.n_kop < 10) { out << ".0" << d.n_kop; }
-	else { out << "." << d.n_kop; }
+ostream& operator<<(ostream& out, const Money& l)
+{
+	out << "\nѕервое: " << l.first;
+	out << "\n¬торое : " << l.second;
+	out << l.n_rub;
+	if (l.n_kop < 10) { out << ".0" << l.n_kop; }
+	else { out << "." << l.n_kop; }
 	return out;
+}
+void Money::Show()
+{
+	cout << "\nѕервое : " << first;
+	cout << "\n¬торое : " << second << endl;
+	cout << n_rub;
+	if (n_kop < 10) { cout << ".0" << n_kop; }
+	else { cout << "." << n_kop; }
+	cout << "\n";
 }

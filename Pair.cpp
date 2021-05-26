@@ -1,56 +1,46 @@
 #pragma once
 #include "Pair.h"
 
-Pair::Pair(void) {
-	first = 0;
-	second = 0;
+Pair::Pair(void)
+{
+	first = 0; second = 0;
 }
-
-Pair::~Pair(void) {
-
+Pair::~Pair(void)
+{
 }
-
-Pair::Pair(int F, int S) {
-	first = F;
-	second = S;
+Pair::Pair(int C, int P)
+{
+	first = C; second = P;
 }
-
-Pair::Pair(const Pair& Pair) {
-	first = Pair.first;
-	second = Pair.second;
+Pair::Pair(const Pair& Pair)
+{
+	first = Pair.first; second = Pair.second;
 }
-
-void Pair::set_first(int F) {
-	first = F;
+void Pair::Set_first(int C)
+{
+	first = C;
 }
-
-void Pair::set_second(int S) {
-	second = S;
+void Pair::Set_second(int P)
+{
+	second = P;
 }
-
-Pair& Pair::operator=(const Pair& t) {
-	if (&t == this) return *this;
-	first = t.first;
-	second = t.second;
+Pair& Pair::operator=(const Pair& c)
+{
+	if (&c == this)return *this;
+	second = c.second;
+	first = c.first;
 	return *this;
 }
-
-Pair& Pair::operator+(const Pair& t) {
-	if (&t == this) return *this;
-	first = first + t.first;
-	second = second + t.second;
-	return *this;
+istream& operator>>(istream& in, Pair& c)
+{
+	cout << "\nПервое:"; in >> c.first; cout << "\nВторое:"; in >> c.second; return in;
 }
-
-
-istream& operator>>(istream& in, Pair& t) {
-	cout << "Введите первое число: "; in >> t.first;
-	cout << "Введите второе число: "; in >> t.second;
-	return in;
-}
-
-
-ostream& operator<<(ostream& out, const Pair& t) {
-	out << t.first << "." << t.second << endl;
+ostream& operator<<(ostream& out, const Pair& c)
+{
+	out << "\nПервое:" << c.first; out << "\nВторое:" << c.second; out << "\n";
 	return out;
+}
+void Pair::Show()
+{
+	cout << "\nПервое: " << first; cout << "\nВторое: " << second; cout << "\n";
 }

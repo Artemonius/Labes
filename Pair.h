@@ -1,26 +1,25 @@
 #pragma once
-#include <iostream>
-#include <string>
+#include "Object.h" 
+#include <string> 
+#include <iostream> 
+
 using namespace std;
-class Pair {
+class Pair :
+	public Object
+{
 public:
-	Pair(void);
-public:
+Pair(void); public:
 	virtual ~Pair(void);
-	Pair(int F, int S);
+	void Show();//функция для просмотра атрибутов класса с помощью указателя 
+	Pair(int, int);
 	Pair(const Pair&);
-
-	int get_first() { return first; }
-	int get_second() { return second; }
-
-	void set_first(int F);
-	void set_second(int S);
-
+	int Get_first() { return first; }
+	int Get_second() { return second; }
+	void Set_first(int);
+	void Set_second(int);
 	Pair& operator=(const Pair&);
-	Pair& operator+(const Pair&);
-
-	friend istream& operator >> (istream& in, Pair& t);
-	friend ostream& operator << (ostream& out, const Pair& t);
+	friend istream& operator>>(istream& in, Pair& c);
+	friend ostream& operator<<(ostream& out, const Pair& c);
 protected:
 	int first;
 	int second;
