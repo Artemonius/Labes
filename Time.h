@@ -3,90 +3,57 @@
 using namespace std;
 class Time
 {
-	int minute, second;
+	int min, sec;
 public:
-	Time() :minute(0), second(0) {}
-	void set_min_sec()
+	Time() :min(0), sec(0) {}
+	Time(int m, int s)
 	{
-		system("chcp 1251>nul");
-		cout << "¬ведите часы : "; cin >> minute;
-		cout << "¬ведите минуты : "; cin >> second;
+		min = m; sec = s;
 	}
-	int get_min()
+	Time(const Time& ob)
 	{
-		return 	this->minute;
-	}
-	int get_sec()
-	{
-		return 	this->second;
-	}
-	Time operator -(const Time& obj)
-	{
-		Time object;
-		object.minute = minute - obj.minute;
-		object.second = second - obj.second;
-		return Time(object);
-	}
-	bool operator ==(const Time& obj)
-	{
-		return (minute == obj.minute && second == obj.second);
-	}
-	bool operator !=(const Time& obj)
-	{
-		return (minute == obj.minute && second == obj.second);
-	}
-	void show()
-	{
-		cout << minute << ":" << second << endl;
+		min = ob.min; sec = ob.sec;
 	}
 	Time operator=(const Time& ob)
 	{
-		this->minute = ob.minute;
-		this->second = ob.second;
+		min = ob.min; sec = ob.sec;
 		return *this;
 	}
-	Time operator+=(const Time& ob)
+	Time operator +(const Time& ob)
 	{
-		this->minute += ob.minute;
-		this->second += ob.second;
-		return *this;
+		Time temp;
+		temp.min = min + ob.min;
+		temp.sec = sec + ob.sec;
+		return temp;
 	}
-	Time operator/(int n)
+	Time operator -(const Time& ob)
 	{
-		this->minute = this->minute / n;
-		this->second = this->second / n;
-		return *this;
+		Time temp;
+		temp.min = min - ob.min;
+		temp.sec = sec - ob.sec;
+		return temp;
 	}
-	Time operator*(const Time& ob)
+	Time operator+(int num)
 	{
-		this->minute = minute * ob.minute;
-		this->second = second * ob.second;
-		return *this;
-	}
-	bool operator<(const Time& ob)
-	{
-		return (this->minute < ob.minute&& this->second < ob.second);
+		Time temp;
+		temp.min += num;
+		temp.sec += num;
+		return temp;
 	}
 	bool operator>(const Time& ob)
 	{
-		return (this->minute > ob.minute && this->second > ob.second);
-	}
-	bool operator<=(const Time& ob)
-	{
-		return (this->minute <= ob.minute && this->second <= ob.second);
+		return (this->min > ob.min && this->sec > ob.sec);
 	}
 	friend istream& operator>>(istream& in, Time& ob);
 	friend ostream& operator<<(ostream& out, Time& ob);
-
-	~Time() {}
 };
 istream& operator >>(istream& in, Time& ob)
 {
-	in >> ob.minute >> ob.second;
+	in >> ob.min >> ob.sec;
 	return in;
 }
 ostream& operator<<(ostream& out, Time& ob)
 {
-	out << ob.minute << " : " << ob.second;
+	out << ob.min << " : " << ob.sec;
 	return out;
 }
