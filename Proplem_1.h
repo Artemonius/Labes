@@ -1,22 +1,21 @@
-#include<iostream>
-using namespace std;
+#pragma once
 #include<list>
 typedef  list<float> L;
+system("chcp 1251>nul");
 int siz = 0, j = 0, pos = 0, i = 0;
 float ele;
 char ch;   L l;
 //function for make a list;
 L Make_list()
 {
-	system("chcp 1251>nul");
 
-	cout << "Введите размер этого списка ";	cin >> siz;
+	cout << "Введите размер списка ";	cin >> siz;
 
 	auto it = l.begin();
 
 	for (int i = 0; i < siz; i++)
 	{
-		cout << "Введите номер элементаа в этот список : "; cin >> ele;
+		cout << "Введите номер элемента в списке : "; cin >> ele;
 		l.emplace(it, ele);
 	}
 	l.resize(siz);
@@ -36,8 +35,8 @@ void print_list(L l)
 void Add_element_in_list()
 {
 
-	cout << "Вы хотите добавить элемент с конца ('b') , с начала ('f') или с другой позиции ('p') : "; cin >> ch;
-	cout << "How much elements you want add in this list : "; cin >> siz;
+	cout << "Вы хотите добавить элементы с конца ('b') , с начала ('f') или с другой позиции ('p') : "; cin >> ch;
+	cout << "Сколько элементов вы хотите добавить в список : "; cin >> siz;
 	auto  it = l.begin();
 	switch (ch)
 	{
@@ -46,7 +45,7 @@ void Add_element_in_list()
 
 		for (i = 0; i < siz; i++)
 		{
-			cout << "Введите номер элемента в этот список: "; cin >> ele;
+			cout << "Введите номер элемента в списке : "; cin >> ele;
 			l.emplace_back(ele);
 		}
 		break;
@@ -56,7 +55,7 @@ void Add_element_in_list()
 
 		for (i = 0; i < siz; i++)
 		{
-			cout << "Введите номер элемента в этот список : "; cin >> ele;
+			cout << "Введите номер элемента в этом списке : "; cin >> ele;
 			l.emplace_front(ele);
 		}
 		break;
@@ -64,7 +63,7 @@ void Add_element_in_list()
 	case'p':
 	{
 
-		cout << "Введите позицию, с которой вы хотите добавить элемент : "; cin >> pos;
+		cout << "Введите позицию на которую вы хотите добавить элемент : "; cin >> pos;
 		it = l.begin();
 		while (j != pos)
 		{
@@ -72,7 +71,7 @@ void Add_element_in_list()
 		}
 		for (; it != l.end(); it++)
 		{
-			cout << "Введите номер элемента в этот список "; cin >> ele;
+			cout << "Введите номер элемента в списке "; cin >> ele;
 			l.emplace(it, ele);
 		}
 		break;
@@ -88,8 +87,8 @@ void Add_element_in_list()
 //Function for delete eleement from frist , end or any position from list;
 void delete_element_from_list()
 {
-	cout << "Вы хотите удалить элемент с конца ('b') , с начала ('f') или с другой позиции('p') : "; cin >> ch;
-	cout << "Сколько элементов вы хотите удалить из этого списка : "; cin >> siz;
+	cout << "Вы хотите удалить с конца ('b') , с начала ('f') или  с другой позиции('p') : "; cin >> ch;
+	cout << "Сколько элементов вы хотите удалить из списка : "; cin >> siz;
 	list<float>::iterator it;
 	switch (ch)
 	{
@@ -112,7 +111,7 @@ void delete_element_from_list()
 	case'p':
 	{
 		int j = 0, pos;
-		cout << "Укажите позицию, с которой вы хотите добавить в список : "; cin >> pos;
+		cout << "Введите позицию на которую вы хотите добавить элемент : "; cin >> pos;
 		it = l.begin();
 		while (j != pos)
 		{
@@ -136,49 +135,32 @@ void Menu_list()   //Menu functions for problem 1;
 {
 	Make_list();
 	print_list(l);
-	while (true)
+	cout << "          1: Добавить элементы           \n"
+		<< "           2: Удалить элемент          \n"
+		<< "           3: Распечатать список          \n";
+	cout << "Введите ваш выбор : "; cin >> j;
+	switch (j)
 	{
-
-		cout << "          1: Добавить элемент             \n"
-			<< "           2: Удалить элемент       \n"
-			<< "           3: Распечатать список              \n"
-			<< "           4: Завершить работу программы                   \n";
-		cout << "Введите ваш выбор : "; cin >> j;
-		switch (j)
-		{
-		case 1:
-		{
-			Add_element_in_list();
-			break;
-		}
-		case 2:
-		{
-			delete_element_from_list();
-			break;
-		}
-		case 3:
-		{
-			print_list(l);
-			break;
-		}
-		case 4:
-		{
-			system("pause");
-			break;
-		}
-		default:
-		{
-			cout << "Ваш выбор некорректен " << endl;
-			Menu_list();
-			break;
-		}
-		}
+	case 1:
+	{
+		//Add_element_in_list();
+		break;
 	}
-}
-int main()
-{
-
-
-	Menu_list();
-	return 0;
+	case 2:
+	{
+		//delete_element_from_list();
+		break;
+	}
+	case 3:
+	{
+		print_list(l);
+		break;
+	}
+	default:
+	{
+		cout << "Ваш выбор некорректен " << endl;
+		Menu_list();
+		break;
+	}
+	}
 }
